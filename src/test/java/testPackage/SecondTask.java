@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class SecondTask {
     @Test
-    public void secondTest(){
+    public void Test(){
         WebDriver driver = new ChromeDriver();
         try{
         driver.get("https://duckduckgo.com");
