@@ -3,13 +3,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import java.time.Duration;
-
 import static org.testng.Assert.assertEquals;
 
 public class TestClass {
@@ -22,7 +22,6 @@ public class TestClass {
             String expectedTitle = "Google";
             assertEquals(actualTitle, expectedTitle, "Title mismatch");
         }
-
         @Test
                 public void secondTest() {
             driver.get("https://duckduckgo.com");
@@ -30,7 +29,6 @@ public class TestClass {
             boolean isLogoDisplayed = driver.findElement(logo).isDisplayed();
             Assert.assertTrue(isLogoDisplayed, "Logo is not displayed");
         }
-
     /**
      * open Chrome browser
      *  open duckduckgo.com
@@ -51,7 +49,6 @@ public class TestClass {
         String actualFirstResultText = driver.findElement(firstResultLocator).getAttribute("href");
         assertEquals(actualFirstResultText, firstResultText, "First search result is match");
     }
-
     /**
      * Open Mozilla Firefox
      * navigate to duckduckgo.com
@@ -59,7 +56,6 @@ public class TestClass {
      * Assert that the text of the fourth result is [TestNG Tutorial]
      * Close Mozilla Firefox
      */
-
     @Test
     public void fourthTest() {
         driver.get("https://duckduckgo.com");
@@ -71,19 +67,26 @@ public class TestClass {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         String actualFourthResultText = driver.findElement(fourthResultLocator).getText();
         assertEquals(actualFourthResultText, fourthResultText, "Fourth search result is match");
-
-
-
-
-
-
         }
-
-
-
-
-
-
+    /**
+     * Open Google Chrome
+     * Navigate to [https://duckduckgo.com/
+     * Search for [Cucumber IO]
+     * Assert that the link of the second result contains [https://www.linkedin.com]
+     * Close Google Chrome
+     */
+    @Test
+    public void fifthTest() {
+        driver.get("https://duckduckgo.com");
+        By searchInputLocator = By.xpath("//input [@class='searchbox_input__rnFzM']");
+        driver.findElement(searchInputLocator).sendKeys("Cucumber IO");
+        driver.findElement(searchInputLocator).submit();
+        String secondResultText = "https://www.linkedin.com";
+        By secondResultLocator = By.xpath("//*[@id=\"r1-1\"]/div[3]/h2/a");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        String actualSecondResultText = driver.findElement(secondResultLocator).getAttribute("href");
+        assertEquals(actualSecondResultText, secondResultText, "Second search result is match");
+    }
 
 
     @BeforeMethod
